@@ -18,12 +18,21 @@ def show_tasks(tasks):
         print("No tasks yet!")
     else:
         print("\nYour tasks:")
-        for index, task, in enumerate(tasks, start=1):
-            print(index, "-", task)
+        for index, task in enumerate(tasks, start=1):
+            if task["done"]:
+             print(index, "-", "[x]", task["text"])
+
+            else:
+                print(index, "-", "[ ]", task["text"])
 
 def add_task(tasks):
     task = input("Enter task: ")
-    tasks.append(task)
+    tasks.append(
+        {
+            "text": task,
+            "done": False
+        }
+    )
     save_tasks(tasks)
     print("Task added!")
 
@@ -47,6 +56,26 @@ def delete_task(tasks):
     except ValueError:
         print("Please enter a valid number")
 
+def mark_task_done(tasks):
+    if len(tasks) == 0:
+        print("No tasks to mark as done!")
+        return
+    
+    show_tasks(tasks)
+
+    try:
+        task_number = int(input("Enter task number to mark as done: "))
+
+        if 1 <= task_number <= len(tasks):
+            tasks[task_number - 1]["done"] = True
+            save_tasks(tasks)
+            print("Task marked as done!")
+        else:
+            print("Invalid task number")
+
+    except ValueError:
+        print("Please enter a valid number")
+
 def main():
     tasks = load_tasks()
 
@@ -55,7 +84,8 @@ def main():
         print("1. Show tasks")
         print("2. Add task")
         print("3. Delete task")
-        print("4. Exit")
+        print("4. Mark task as done")
+        print("5. Exit")
 
         choice = input("Choose option: ")
 
@@ -69,6 +99,9 @@ def main():
             delete_task(tasks)
 
         elif choice == "4":
+            mark_task_done(tasks)
+
+        elif choice == "5":
             print("Goodbye!")
             break
 

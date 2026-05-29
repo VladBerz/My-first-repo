@@ -1,5 +1,14 @@
 [
-    "Learn Python",
-    "Do homework",
-    "Do sex"
+    {
+        "text": "Learn Python",
+        "done": true
+    },
+    {
+        "text": "Do sex",
+        "done": false
+    },
+    {
+        "text": "Build project",
+        "done": false
+    }
 ]
