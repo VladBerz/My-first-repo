@@ -5,10 +5,18 @@
     },
     {
         "text": "Do sex",
-        "done": false
+        "done": true
     },
     {
         "text": "Build project",
+        "done": false
+    },
+    {
+        "text": "Walk at the street",
+        "done": true
+    },
+    {
+        "text": "Learn Git",
         "done": false
     }
 ]

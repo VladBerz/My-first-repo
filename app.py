@@ -76,6 +76,18 @@ def mark_task_done(tasks):
     except ValueError:
         print("Please enter a valid number")
 
+def show_stats(tasks):
+    total_tasks = len(tasks)
+    done_tasks = 0
+    for task in tasks:
+        if task["done"]:
+            done_tasks += 1
+    remaining_tasks = total_tasks - done_tasks
+    
+    print("Total tasks:", total_tasks);
+    print("Done tasks:", done_tasks);
+    print("Remaining tasks:", remaining_tasks)
+
 def main():
     tasks = load_tasks()
 
@@ -85,7 +97,8 @@ def main():
         print("2. Add task")
         print("3. Delete task")
         print("4. Mark task as done")
-        print("5. Exit")
+        print("5. Show stats")
+        print("6. Exit")
 
         choice = input("Choose option: ")
 
@@ -100,8 +113,11 @@ def main():
 
         elif choice == "4":
             mark_task_done(tasks)
-
+        
         elif choice == "5":
+            show_stats(tasks)
+
+        elif choice == "6":
             print("Goodbye!")
             break
 
