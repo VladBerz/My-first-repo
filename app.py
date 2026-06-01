@@ -83,10 +83,16 @@ def show_stats(tasks):
         if task["done"]:
             done_tasks += 1
     remaining_tasks = total_tasks - done_tasks
+    if total_tasks == 0:
+        completion_percent = 0
+    else:
+        completion_percent = done_tasks / total_tasks * 100
+        completion_percent = round(completion_percent, 1)
     
     print("Total tasks:", total_tasks);
     print("Done tasks:", done_tasks);
     print("Remaining tasks:", remaining_tasks)
+    print("Completion_percent:", completion_percent)
 
 def main():
     tasks = load_tasks()

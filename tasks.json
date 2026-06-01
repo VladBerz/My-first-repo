@@ -18,5 +18,9 @@
     {
         "text": "Learn Git",
         "done": false
+    },
+    {
+        "text": "Play to game",
+        "done": true
     }
 ]
