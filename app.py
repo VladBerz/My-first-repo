@@ -20,13 +20,18 @@ def show_tasks(tasks):
         print("\nYour tasks:")
         for index, task in enumerate(tasks, start=1):
             if task["done"]:
-             print(index, "-", "[x]", task["text"])
+                print(index, "-", "[x]", task["text"])
 
             else:
                 print(index, "-", "[ ]", task["text"])
 
 def add_task(tasks):
-    task = input("Enter task: ")
+    task = input("Enter task: ").strip()
+
+    if task == "":
+        print("Task cannot be empty!")
+        return
+    
     tasks.append(
         {
             "text": task,
@@ -49,7 +54,7 @@ def delete_task(tasks):
         if 1 <= task_number <= len(tasks):
             removed_task = tasks.pop(task_number - 1)
             save_tasks(tasks)
-            print("Deleted:", removed_task)
+            print("Deleted:", removed_task["text"])
         else:
             print("Invalid task number")
 
@@ -76,6 +81,38 @@ def mark_task_done(tasks):
     except ValueError:
         print("Please enter a valid number")
 
+def mark_task_not_done(tasks):
+    if len(tasks) == 0:
+        print("No tasks yet!")
+        return
+    
+    done_tasks = 0
+    for task in tasks:
+        if task["done"]:
+            done_tasks += 1
+
+    if done_tasks == 0:
+        print("No tasks completed yet!")
+        return
+    
+    show_tasks(tasks)
+    
+    try:
+        task_number = int(input("Enter task number to mark as not done: "))
+        if 1 <= task_number <= len(tasks):
+            if tasks[task_number - 1]["done"] == False:
+                print("This task is already not done!")
+                return
+            
+            tasks[task_number - 1]["done"] = False
+            save_tasks(tasks)
+            print("Task marked as not done!")
+        else:
+            print("Invalid task number")
+
+    except ValueError:
+        print("Please enter a valid number")
+      
 def show_stats(tasks):
     total_tasks = len(tasks)
     done_tasks = 0
@@ -89,10 +126,10 @@ def show_stats(tasks):
         completion_percent = done_tasks / total_tasks * 100
         completion_percent = round(completion_percent, 1)
     
-    print("Total tasks:", total_tasks);
-    print("Done tasks:", done_tasks);
+    print("Total tasks:", total_tasks)
+    print("Done tasks:", done_tasks)
     print("Remaining tasks:", remaining_tasks)
-    print("Completion_percent:", completion_percent)
+    print("Completion_percent:", completion_percent, "%")
 
 def main():
     tasks = load_tasks()
@@ -103,8 +140,9 @@ def main():
         print("2. Add task")
         print("3. Delete task")
         print("4. Mark task as done")
-        print("5. Show stats")
-        print("6. Exit")
+        print("5. Mark task as not done")
+        print("6. Show stats")
+        print("7. Exit")
 
         choice = input("Choose option: ")
 
@@ -121,9 +159,12 @@ def main():
             mark_task_done(tasks)
         
         elif choice == "5":
-            show_stats(tasks)
+            mark_task_not_done(tasks)
 
         elif choice == "6":
+            show_stats(tasks)
+
+        elif choice == "7":
             print("Goodbye!")
             break
 

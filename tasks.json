@@ -4,10 +4,6 @@
         "done": true
     },
     {
-        "text": "Do sex",
-        "done": true
-    },
-    {
         "text": "Build project",
         "done": false
     },
@@ -21,6 +17,10 @@
     },
     {
         "text": "Play to game",
+        "done": false
+    },
+    {
+        "text": "Cooking",
         "done": true
     }
 ]
