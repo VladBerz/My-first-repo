@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f2f2f7">
+  <title>Перевод средств</title>
+  <style>
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent} body{margin:0;min-height:100svh;display:grid;place-items:center;background:#f2f2f7;color:#000;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;padding:18px}
+    body:before{content:"";position:fixed;top:10px;left:50%;translate:-50% 0;width:118px;height:34px;border-radius:20px;background:#000;z-index:5}
+    .card{width:min(390px,100%);text-align:center;background:#fff;border-radius:32px;padding:46px 24px 32px;box-shadow:0 12px 40px #00000017}
+    .icon{width:74px;height:74px;margin:0 auto 24px;border-radius:22px;display:grid;place-items:center;background:linear-gradient(145deg,#39d168,#20a84f);color:#fff;font-size:38px;box-shadow:0 8px 20px #34c7593d}
+    h1{font-size:25px;letter-spacing:-.5px;line-height:1.22;margin:0 0 9px}.sub{color:#8e8e93;margin:0 0 30px;font-size:16px}
+    .ring{--p:0deg;width:146px;height:146px;margin:0 auto 27px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#34c759 var(--p),#e5e5ea 0);position:relative}
+    .ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:#fff}.time{z-index:1;font-size:52px;font-weight:700;letter-spacing:-2px;font-variant-numeric:tabular-nums}
+    .status{min-height:48px;color:#3a3a3c;font-size:16px;line-height:1.5}.small{font-size:13px;color:#aeaeb2;margin-top:20px}
+    .reveal{display:none}.reveal h1{font-size:36px;letter-spacing:-1px}.reveal .icon{background:linear-gradient(145deg,#0a84ff,#5856d6);box-shadow:0 8px 20px #0a84ff3d}
+    button{width:100%;border:0;border-radius:14px;background:#007aff;color:#fff;font-weight:600;font-size:17px;padding:14px 22px;margin-top:18px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <main class="card" id="process">
+    <div class="icon">↗</div>
+    <h1>Перевод средств пользователю</h1>
+    <p class="sub">Подтверждение через iPhone</p>
+    <div class="ring" id="ring"><div class="time" id="time">10</div></div>
+    <div class="status" id="status">Подключение к платёжному сервису…</div>
+    <div class="small">Не закрывайте страницу до завершения</div>
+  </main>
+
+  <main class="card reveal" id="reveal">
+    <div class="icon">😄</div>
+    <h1>Соси</h1>
+    <p class="sub">Никакого перевода не было. Телефон и деньги в полном порядке.</p>
+    <button onclick="location.reload()">Повторить</button>
+  </main>
+
+  <script>
+    const total=10, time=document.querySelector('#time'), ring=document.querySelector('#ring'), status=document.querySelector('#status');
+    const messages={8:'Проверка реквизитов…',6:'Подготовка перевода…',4:'Ожидание подтверждения…',2:'Завершение операции…'};
+    let left=total;
+    const tick=()=>{
+      time.textContent=left;
+      ring.style.setProperty('--p',`${(total-left)/total*360}deg`);
+      if(messages[left]) status.textContent=messages[left];
+      if(left--<=0){clearInterval(timer);document.querySelector('#process').style.display='none';document.querySelector('#reveal').style.display='block'}
+    };
+    tick(); const timer=setInterval(tick,1000);
+  </script>
+</body>
+</html>
